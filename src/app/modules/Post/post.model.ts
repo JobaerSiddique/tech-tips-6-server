@@ -42,6 +42,10 @@ const PostSchema = new Schema({
         type: Number, 
         default: 0
     },
+    votedBy: [{ 
+        type: Schema.Types.ObjectId, 
+        ref: 'User' 
+    }],
     downvotes: { 
         type: Number, 
         default: 0 

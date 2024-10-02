@@ -52,7 +52,15 @@ const deleteUserPost = catchAsync(async(req,res)=>{
 })
 
 const upVoteUser = catchAsync(async(req,res)=>{
-
+    const {postId} = req.params;
+    const {userId} =req.user;
+    const result= await PostService.upvoteUserDB(postId,userId)
+    sendResponse(res,{
+        statusCode:httpStatus.OK,
+        success:true,
+        message:'Post upvoted successfully',
+        data:result
+    })
 })
 
 export const PostController ={

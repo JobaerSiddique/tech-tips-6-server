@@ -11,6 +11,7 @@ router.post('/createPost',Auth(USER_ROLE.user), PostController.createPostUser)
 router.get('/',Auth(USER_ROLE.user), PostController.getUserPost)
 router.put('/updatePost/:id', PostController.updateUserPost)
 router.delete('/deletePost/:id', PostController.deleteUserPost)
+router.post('/upvote/:postId',Auth(USER_ROLE.user), PostController.upVoteUser)
 
 
 

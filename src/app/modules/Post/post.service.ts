@@ -52,10 +52,33 @@ const deleteUserPostDB = async(id:string)=>{
     return deletePost;
 }
 
+const upvoteUserDB = async(postId:string,userId:string)=>{
+    const post = await Post.findById(postId);
+    if (!post) {
+        throw new AppError(httpStatus.NOT_FOUND, 'Post not found');
+    }
+
+    if(post.isDeleted){
+        throw new AppError(httpStatus.FORBIDDEN,"Post is deleted")
+    }
+    
+    const hasUpvoted = post.votedBy.includes(userId);
+    if (hasUpvoted) {
+      throw new AppError(httpStatus.FORBIDDEN, 'You have already upvoted this post');
+    }
+
+    
+    post.upvotes += 1;
+    post.votedBy.push(userId);
+    await post.save();
+    return post;
+}
+
 
 export const PostService ={
     createPostDB,
     getUserPostDB,
     updateUserPostDB,
-    deleteUserPostDB
+    deleteUserPostDB,
+    upvoteUserDB
 }
