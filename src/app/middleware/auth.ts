@@ -30,7 +30,7 @@ const Auth = (...requiredRoles: TUserRole[])=>{
         }
        
         req.user = decoded as JwtPayload
-        console.log('auth',req.user);
+        
         next()
        
     })

@@ -20,13 +20,39 @@ const PostSchema = new Schema({
     },
     createdAt:{
         type: Date,
-        default: Date.now().toLocaleString()
+        default: Date.now
+    },
+    category: { 
+        type: String, 
+        required: true 
+    },
+    imageUrls: { 
+        type: [String], 
+        default: [] 
+    },
+    tags: { 
+        type:[String], 
+        default: [] 
+    },
+    isPremium: { 
+        type: Boolean, 
+        default: false 
+    },
+    upvotes: { 
+        type: Number, 
+        default: 0
+    },
+    downvotes: { 
+        type: Number, 
+        default: 0 
     },
     isDeleted:{
         type: Boolean,
         default: false
     }
 
+},{
+    timestamps:true
 })
 
 
