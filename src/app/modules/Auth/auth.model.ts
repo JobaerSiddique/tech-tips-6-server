@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
 import bcrypt from "bcrypt";
 import config from "../../../config";
+import { TUser } from "./auth.interface";
 
 const AuthSchema = new Schema({
     name:{
@@ -25,15 +26,31 @@ const AuthSchema = new Schema({
         required: true,
         unique: true,
         
+    },
+    status:{
+        type:String,
+        enum:["active","blocked"],
+        default: "active"
+
+    },
+    role:{
+        type:String,
+        enum:["user","admin"],
+        default: "user"
+    },
+    isDeleted:{
+        type:Boolean,
+        default: false
     }
+},{
+    timestamps:true
 })
 
 
 
 AuthSchema.pre('save', async function (next) {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const user = this; // doc
-    // hashing password and save into DB
+  
+    const user = this; 
   
     user.password = await bcrypt.hash(
       user.password,
@@ -48,4 +65,4 @@ AuthSchema.pre('save', async function (next) {
     next();
   });
 
-  export const Auth = model('User',AuthSchema)
+  export const User = model<TUser>('User',AuthSchema)
